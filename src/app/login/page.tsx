@@ -12,7 +12,10 @@ export default function LoginPage() {
           <CardTitle className="text-2xl">Izamodas</CardTitle>
           <CardDescription>Entre com suas credenciais para acessar o painel.</CardDescription>
         </CardHeader>
-        <form action={login}>
+        <form action={async (formData) => {
+          'use server'
+          await login(formData)
+        }}>
           <CardContent className="grid gap-4">
             <div className="grid gap-2">
               <Label htmlFor="email">E-mail</Label>
