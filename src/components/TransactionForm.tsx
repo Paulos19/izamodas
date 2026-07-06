@@ -85,6 +85,21 @@ export function TransactionForm({ clothingItems, onSubmit }: TransactionFormProp
             </div>
           )}
 
+          {type === 'INCOME' && (
+            <div className="space-y-2">
+              <Label htmlFor="paymentMethod">Forma de Pagamento</Label>
+              <Select name="paymentMethod" defaultValue="CASH">
+                <SelectTrigger>
+                  <SelectValue placeholder="Selecione a forma" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="CASH">Dinheiro / Pix</SelectItem>
+                  <SelectItem value="CARD">Cartão (Crédito/Débito)</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          )}
+
           <div className="space-y-2">
             <Label htmlFor="description">Descrição</Label>
             <Input 

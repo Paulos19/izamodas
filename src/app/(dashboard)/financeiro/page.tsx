@@ -12,15 +12,22 @@ async function addTransaction(formData: FormData) {
   const description = formData.get('description') as string
   const amount = parseFloat(formData.get('amount') as string)
   const clothingItemId = formData.get('clothingItemId') as string | null
+  const paymentMethod = formData.get('paymentMethod') as 'CASH' | 'CARD' | null
 
   if (type && description && !isNaN(amount)) {
+    const dataObj: any = {
+      type, 
+      description, 
+      amount,
+      paymentMethod: type === 'INCOME' && paymentMethod ? paymentMethod : undefined
+    };
+
+    if (clothingItemId && clothingItemId !== 'none') {
+      dataObj.clothingItem = { connect: { id: clothingItemId } };
+    }
+
     await prisma.financialTransaction.create({
-      data: { 
-        type, 
-        description, 
-        amount,
-        clothingItemId: clothingItemId && clothingItemId !== 'none' ? clothingItemId : null
-      }
+      data: dataObj
     })
     revalidatePath('/financeiro')
     revalidatePath('/')
@@ -61,6 +68,7 @@ export default async function FinanceiroPage() {
                   <TableHead>Data</TableHead>
                   <TableHead>Descrição</TableHead>
                   <TableHead>Tipo</TableHead>
+                  <TableHead>Pagamento</TableHead>
                   <TableHead className="text-right">Valor</TableHead>
                 </TableRow>
               </TableHeader>
@@ -86,6 +94,11 @@ export default async function FinanceiroPage() {
                           'bg-orange-100 text-orange-700'
                         }`}>
                           {tx.type === 'INCOME' ? 'Entrada' : tx.type === 'EXPENSE' ? 'Gasto' : 'Troco'}
+                        </span>
+                      </TableCell>
+                      <TableCell>
+                        <span className="text-xs text-gray-500 font-semibold">
+                          {tx.paymentMethod === 'CASH' ? 'Dinheiro/Pix' : tx.paymentMethod === 'CARD' ? 'Cartão' : '-'}
                         </span>
                       </TableCell>
                       <TableCell className="text-right font-bold">

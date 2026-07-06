@@ -5,6 +5,7 @@ import { revalidatePath } from 'next/cache'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import EditClothingDialog from '@/components/EditClothingDialog'
 
 async function addClothingItem(formData: FormData) {
   'use server'
@@ -66,12 +67,13 @@ export default async function RoupasPage() {
                   <TableHead>Nome</TableHead>
                   <TableHead>Descrição</TableHead>
                   <TableHead className="text-right">Preço</TableHead>
+                  <TableHead className="w-[50px]"></TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {items.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={3} className="text-center text-gray-500">Nenhuma roupa cadastrada.</TableCell>
+                    <TableCell colSpan={4} className="text-center text-gray-500">Nenhuma roupa cadastrada.</TableCell>
                   </TableRow>
                 ) : (
                   items.map(item => (
@@ -79,6 +81,9 @@ export default async function RoupasPage() {
                       <TableCell className="font-medium">{item.name}</TableCell>
                       <TableCell>{item.description}</TableCell>
                       <TableCell className="text-right">R$ {item.price.toFixed(2).replace('.', ',')}</TableCell>
+                      <TableCell>
+                        <EditClothingDialog item={item} />
+                      </TableCell>
                     </TableRow>
                   ))
                 )}

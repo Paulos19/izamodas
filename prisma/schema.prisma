@@ -35,6 +35,12 @@ model FinancialTransaction {
   updatedAt      DateTime      @updatedAt
   clothingItemId String?
   clothingItem   ClothingItem? @relation(fields: [clothingItemId], references: [id])
+  paymentMethod  PaymentMethod?
+}
+
+enum PaymentMethod {
+  CASH
+  CARD
 }
 
 enum TransactionType {
