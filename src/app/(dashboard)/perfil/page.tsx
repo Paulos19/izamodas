@@ -1,8 +1,15 @@
+import prisma from '@/lib/prisma'
 import { logout } from '@/app/actions/auth'
 import { LogOut, User, Settings, Shield, HelpCircle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { ChangePasswordDialog } from '@/components/ChangePasswordDialog'
+import { ProfileExportButtons } from '@/components/ProfileExportButtons'
 
-export default function PerfilPage() {
+export default async function PerfilPage() {
+  const transactions = await prisma.financialTransaction.findMany({
+    orderBy: { date: 'desc' }
+  })
+
   return (
     <div className="max-w-2xl mx-auto space-y-8">
       {/* Header Profile */}
@@ -29,18 +36,11 @@ export default function PerfilPage() {
           </div>
         </div>
 
-        <div className="flex items-center gap-4 p-5 border-b border-iza-50 hover:bg-iza-50/50 cursor-pointer transition-colors">
-          <div className="w-10 h-10 rounded-full bg-purple-50 flex items-center justify-center">
-            <Shield size={20} className="text-purple-600" />
-          </div>
-          <div className="flex-1">
-            <p className="font-semibold text-gray-800">Segurança</p>
-            <p className="text-sm text-gray-500">Senhas e autenticação</p>
-          </div>
-        </div>
+        {/* Change Password Dialog replaces the static Security div */}
+        <ChangePasswordDialog />
 
         <div className="flex items-center gap-4 p-5 border-b border-iza-50 hover:bg-iza-50/50 cursor-pointer transition-colors">
-          <div className="w-10 h-10 rounded-full bg-orange-50 flex items-center justify-center">
+          <div className="w-10 h-10 rounded-full bg-orange-50 flex items-center justify-center shrink-0">
             <HelpCircle size={20} className="text-orange-600" />
           </div>
           <div className="flex-1">
@@ -49,6 +49,9 @@ export default function PerfilPage() {
           </div>
         </div>
       </div>
+
+      {/* Export Reports Component */}
+      <ProfileExportButtons transactions={transactions} />
 
       {/* Logout Button */}
       <div className="px-4 mt-8 md:hidden">
