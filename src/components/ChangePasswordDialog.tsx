@@ -43,17 +43,19 @@ export function ChangePasswordDialog() {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <div className="flex items-center gap-4 p-5 border-b border-iza-50 hover:bg-iza-50/50 cursor-pointer transition-colors">
-          <div className="w-10 h-10 rounded-full bg-purple-50 flex items-center justify-center shrink-0">
-            <Shield size={20} className="text-purple-600" />
+      <DialogTrigger 
+        render={
+          <div className="flex items-center w-full gap-4 p-5 border-b border-iza-50 hover:bg-iza-50/50 cursor-pointer transition-colors text-left">
+            <div className="w-10 h-10 rounded-full bg-purple-50 flex items-center justify-center shrink-0">
+              <Shield size={20} className="text-purple-600" />
+            </div>
+            <div className="flex-1 text-left">
+              <p className="font-semibold text-gray-800">Segurança</p>
+              <p className="text-sm text-gray-500">Senhas e autenticação</p>
+            </div>
           </div>
-          <div className="flex-1">
-            <p className="font-semibold text-gray-800">Segurança</p>
-            <p className="text-sm text-gray-500">Senhas e autenticação</p>
-          </div>
-        </div>
-      </DialogTrigger>
+        }
+      />
       <DialogContent className="sm:max-w-md rounded-3xl">
         <DialogHeader>
           <div className="mx-auto w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mb-4">
