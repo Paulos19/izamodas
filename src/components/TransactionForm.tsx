@@ -46,16 +46,19 @@ export function TransactionForm({ clothingItems, onSubmit }: TransactionFormProp
   }
 
   return (
-    <Card className="md:col-span-1 h-fit">
-      <CardHeader>
-        <CardTitle>Nova Transação</CardTitle>
-      </CardHeader>
-      <CardContent>
+    <div className="md:col-span-1">
+      <div className="bg-white rounded-3xl p-6 shadow-sm border border-iza-50 sticky top-24">
+        <h3 className="font-bold text-lg text-gray-800 mb-4 flex items-center gap-2">
+          <span className="p-2 bg-iza-100 text-iza-700 rounded-full">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2v20" /><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" /></svg>
+          </span>
+          Nova Transação
+        </h3>
         <form action={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="type">Tipo</Label>
+            <Label htmlFor="type" className="text-gray-600 font-medium text-sm">Tipo</Label>
             <Select name="type" required value={type} onValueChange={(value) => value && setType(value)}>
-              <SelectTrigger>
+              <SelectTrigger className="rounded-xl border-gray-200 bg-gray-50/50 focus:ring-iza-400">
                 <SelectValue placeholder="Selecione o tipo" />
               </SelectTrigger>
               <SelectContent>
@@ -65,12 +68,12 @@ export function TransactionForm({ clothingItems, onSubmit }: TransactionFormProp
               </SelectContent>
             </Select>
           </div>
-          
+
           {type === 'INCOME' && clothingItems.length > 0 && (
             <div className="space-y-2">
-              <Label htmlFor="clothingItemId">Roupa (Opcional)</Label>
+              <Label htmlFor="clothingItemId" className="text-gray-600 font-medium text-sm">Roupa (Opcional)</Label>
               <Select name="clothingItemId" onValueChange={(value: string | any) => value && handleClothingSelect(value as string)}>
-                <SelectTrigger>
+                <SelectTrigger className="rounded-xl border-gray-200 bg-gray-50/50 focus:ring-iza-400">
                   <SelectValue placeholder="Selecione uma peça cadastrada" />
                 </SelectTrigger>
                 <SelectContent>
@@ -87,9 +90,9 @@ export function TransactionForm({ clothingItems, onSubmit }: TransactionFormProp
 
           {type === 'INCOME' && (
             <div className="space-y-2">
-              <Label htmlFor="paymentMethod">Forma de Pagamento</Label>
+              <Label htmlFor="paymentMethod" className="text-gray-600 font-medium text-sm">Forma de Pagamento</Label>
               <Select name="paymentMethod" defaultValue="CASH">
-                <SelectTrigger>
+                <SelectTrigger className="rounded-xl border-gray-200 bg-gray-50/50 focus:ring-iza-400">
                   <SelectValue placeholder="Selecione a forma" />
                 </SelectTrigger>
                 <SelectContent>
@@ -101,35 +104,37 @@ export function TransactionForm({ clothingItems, onSubmit }: TransactionFormProp
           )}
 
           <div className="space-y-2">
-            <Label htmlFor="description">Descrição</Label>
-            <Input 
-              id="description" 
-              name="description" 
-              required 
-              placeholder="Ex: Venda de Blusa / Aluguel" 
+            <Label htmlFor="description" className="text-gray-600 font-medium text-sm">Descrição</Label>
+            <Input
+              id="description"
+              name="description"
+              required
+              placeholder="Ex: Venda de Blusa / Aluguel"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
+              className="rounded-xl border-gray-200 bg-gray-50/50 focus-visible:ring-iza-400"
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="amount">Valor (R$)</Label>
-            <Input 
-              id="amount" 
-              name="amount" 
-              type="number" 
-              step="0.01" 
-              min="0" 
-              required 
-              placeholder="0.00" 
+            <Label htmlFor="amount" className="text-gray-600 font-medium text-sm">Valor (R$)</Label>
+            <Input
+              id="amount"
+              name="amount"
+              type="number"
+              step="0.01"
+              min="0"
+              required
+              placeholder="0,00"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
+              className="rounded-xl border-gray-200 bg-gray-50/50 focus-visible:ring-iza-400 text-lg font-semibold"
             />
           </div>
-          <Button type="submit" className="w-full" disabled={isPending}>
+          <Button type="submit" className="w-full bg-iza-600 hover:bg-iza-700 text-white rounded-xl py-6 mt-2 shadow-md shadow-iza-500/20 font-bold" disabled={isPending}>
             {isPending ? 'Registrando...' : 'Registrar'}
           </Button>
         </form>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   )
 }

@@ -12,9 +12,10 @@ export default function Navigation() {
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   const navItems = [
-    { name: 'Dashboard', href: '/', icon: LayoutDashboard },
-    { name: 'Estoque', href: '/roupas', icon: Tag },
+    { name: 'Início', href: '/', icon: LayoutDashboard },
+    { name: 'Roupas', href: '/roupas', icon: Tag },
     { name: 'Financeiro', href: '/financeiro', icon: ArrowRightLeft },
+    { name: 'Perfil', href: '/perfil', icon: User },
   ];
 
   return (
@@ -75,14 +76,14 @@ export default function Navigation() {
       </aside>
 
       {/* --- MOBILE BOTTOM TABBAR --- */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-iza-100 flex justify-around items-center h-20 px-4 z-50 pb-safe shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
+      <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-iza-100 flex justify-around items-center h-20 px-2 z-50 pb-safe shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
         {navItems.map((item) => {
           const isActive = pathname === item.href;
           return (
             <Link 
               key={item.name} 
               href={item.href} 
-              className="flex flex-col items-center justify-center gap-1 w-16"
+              className="flex flex-col items-center justify-center gap-1 w-[22%]"
             >
               <div className={`p-2 rounded-full ${isActive ? 'bg-iza-100' : ''}`}>
                 <item.icon size={24} className={isActive ? "text-iza-700" : "text-gray-400"} />
@@ -93,12 +94,6 @@ export default function Navigation() {
             </Link>
           );
         })}
-        <form action={logout} className="flex flex-col items-center justify-center gap-1 w-16">
-          <button type="submit" className="p-2 rounded-full">
-            <LogOut size={24} className="text-red-400" />
-          </button>
-          <span className="text-[10px] font-medium text-red-400">Sair</span>
-        </form>
       </div>
     </>
   );
